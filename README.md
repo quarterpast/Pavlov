@@ -15,4 +15,4 @@ describe "Livewire" do
 
 Tests are run synchronously using [node-sync](https://github.com/0ctave/node-sync), so you can spin of all the fibers you want.
 
-Released under the terms of the [MIT License](LICENCE.md)
+Released under the terms of the [MIT License](Pavlov/LICENCE.md)
