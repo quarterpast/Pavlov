@@ -31,7 +31,7 @@ module.exports = class Describe
 				if test.sync-me then test .= sync test,_
 
 				if test is test.async! then test topic,test-cb
-				else try result = test topic catch err finally test-cb err,result
+				else try result = test topic catch err => finally test-cb err,result
 
 				~function test-cb err,result
 					if err? or not result then @fail++ else @pass++
