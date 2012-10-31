@@ -1,5 +1,6 @@
 require \colors
 require \sync
+Future = require 'fibers/future'
 async = (.async!)
 
 module.exports = class Describe
@@ -51,3 +52,20 @@ module.exports = class Describe
 		eq = if deep then (===) else (is)
 		if fn.sync null,topic `eq` val then cb null,true
 		else cb "failed expectation" val
+
+	@get = (url)->
+		future = new Future
+		timer = set-timeout (->future.throw Error \timeout), 1e5
+		req = http.get url, (res)->
+			body = []
+			res.on \data body~push
+			res.on \error ->future.throw it
+			res.on \end ->
+				clear-timeout timer
+				future.return {
+					req,res
+					body:Buffer.concat body .to-string \utf8
+				}
+		.on \error ->future.throw it
+		
+		future.wait!
