@@ -1,6 +1,8 @@
-require \colors
-require \sync
-Future = require 'fibers/future'
+require! {
+	\colors \sync \http
+	Future: 'fibers/future'
+}
+
 async = (.async!)
 
 module.exports = class Describe
